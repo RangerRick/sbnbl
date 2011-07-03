@@ -1,0 +1,24 @@
+.comment_master_list .citem .cfocus .sbnbl-blocked {
+  background-color: #FFCCCC;
+  border-top-color: #996666;
+}
+
+.comment_master_list .citem .new .cfocus .sbnbl-blocked {
+  background-color: #FFCCCC;
+  border-top-color: #996666;
+}
+
+.comment_master_list .citem .sbnbl-blocked {
+  background-color: #FFCCCC;
+  border-top-color: #996666;
+}
+
+.comment_master_list .citem .new .sbnbl-blocked {
+  background-color: #FFCCCC;
+  border-top-color: #996666;
+}
+
+.sbnbl-action {
+  vertical-align: middle;
+  display: inline;
+}

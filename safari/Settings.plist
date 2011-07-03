@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<real>60</real>
+		<key>Key</key>
+		<string>interval</string>
+		<key>MaximumValue</key>
+		<real>300</real>
+		<key>MinimumValue</key>
+		<real>10</real>
+		<key>Title</key>
+		<string>Re-Scan Interval</string>
+		<key>Type</key>
+		<string>Slider</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>users</string>
+		<key>Title</key>
+		<string>Blocked Users</string>
+		<key>Type</key>
+		<string>ListBox</string>
+	</dict>
+</array>
+</plist>

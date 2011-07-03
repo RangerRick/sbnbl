@@ -1,0 +1,36 @@
+<script src="dao.js"></script>
+<script>
+var css_inserted = false;
+
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+    console.log("received request: " + request.action);
+
+    if (request.action == "getConfig") {
+      var users = get_users();
+      var interval = get_interval();
+      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
+      sendResponse({
+        "users": users,
+        "interval": interval
+      });
+    } else if (request.action == "blockUser") {
+      var users = block_user(request.user);
+      var interval = get_interval();
+      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
+      sendResponse({
+        "users": users,
+        "interval": interval
+      });
+    } else if (request.action == "unblockUser") {
+      var users = unblock_user(request.user);
+      var interval = get_interval();
+      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
+      sendResponse({
+        "users": users,
+        "interval": interval
+      });
+    }
+  }
+);
+</script>

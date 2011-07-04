@@ -1,7 +1,5 @@
 <script src="dao.js"></script>
 <script>
-var css_inserted = false;
-
 chrome.extension.onRequest.addListener(
   function(request, sender, sendResponse) {
     console.log("received request: " + request.action);

@@ -1,0 +1,35 @@
+<script src="dao.js"></script>
+<script>
+var intervalId = -1;
+var interval = -1;
+
+var send_update = function(users) {
+	console.debug("sending update: users = " + JSON.stringify(users));
+	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("user_update", users);
+}
+
+var do_update = function() {
+	console.debug("do_update");
+	var newInterval = get_interval();
+	if (newInterval != interval) {
+		console.debug("do_update: interval has changed, re-adding interval (" + interval + " -> " + newInterval + ")")
+		if (intervalId != -1) window.clearInterval(intervalId);
+		intervalId = window.setInterval(do_update, newInterval * 1000);
+		interval = newInterval;
+	}
+
+	var users = get_users();
+	send_update(array_to_lowercase(users));
+}
+
+var do_refresh = function(messageEvent) {
+	if (messageEvent.name == "force_refresh") {
+		console.debug("forcing a refresh");
+		do_update();
+	}
+}
+
+safari.application.addEventListener("message", do_refresh, false);
+
+do_update();
+</script>

@@ -12,17 +12,19 @@
 		<key>MinimumValue</key>
 		<real>10</real>
 		<key>Title</key>
-		<string>Re-Scan Interval</string>
+		<string>Re-Scan Interval (Seconds)</string>
 		<key>Type</key>
-		<string>Slider</string>
+		<string>TextField</string>
 	</dict>
 	<dict>
 		<key>Key</key>
 		<string>users</string>
 		<key>Title</key>
-		<string>Blocked Users</string>
+		<string>Users (Comma-Separated)</string>
+		<key>Titles</key>
+		<array/>
 		<key>Type</key>
-		<string>ListBox</string>
+		<string>TextField</string>
 	</dict>
 </array>
 </plist>

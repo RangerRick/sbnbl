@@ -1,6 +1,6 @@
 {
   "name": "SBNation Black List",
-  "version": "0.70",
+  "version": "@VERSION@",
   "description": "Hide SBNation comments (and responses made to them) by certain users. Not in any way affiliated with, nor endorsed by, SBNation.",
   "icons": {
     "16":  "16.png",

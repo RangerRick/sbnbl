@@ -5,7 +5,7 @@ CHROME_FILES = $(COMMON_FILES) chrome/*.* chrome/manifest.json
 SAFARI_FILES = $(COMMON_FILES) safari/*.* safari/Info.plist
 FIREFOX_FILES = $(COMMON_FILES) firefox/package.json firefox/lib/*.* firefox/data/*.*
 
-all: build/sbnbl.zip build/sbnbl.safariextension build/sbnbl.xpi
+all: build/sbnbl-chrome.zip build/sbnbl.safariextension build/sbnbl.xpi
 
 clean:
 	rm -rf build
@@ -13,7 +13,7 @@ clean:
 %: %.in Makefile
 	sed -e 's,@VERSION@,$(VERSION),g' $< > $@
 
-build/sbnbl.zip: $(CHROME_FILES)
+build/sbnbl-chrome.zip: $(CHROME_FILES)
 	install -d -m 755 build/chrome
 	for file in $(CHROME_FILES); do \
 		cp $$file build/chrome/; \

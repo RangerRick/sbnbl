@@ -1,4 +1,4 @@
-VERSION = 0.73
+VERSION = 0.74
 
 COMMON_FILES := common/*.* common/common.js
 CHROME_FILES = $(COMMON_FILES) chrome/*.* chrome/manifest.json
@@ -41,6 +41,6 @@ build/sbnbl.xpi: $(FIREFOX_FILES)
 	cp firefox/lib/*.* build/firefox/lib/
 	cp firefox/data/*.* build/firefox/data/
 	rm build/firefox/data/*.in
-	cd build/firefox && \
-		cfx xpi && mv sbnbl.xpi .. && \
-		cd ..
+#	cd build/firefox && \
+#		cfx xpi && mv sbnbl.xpi .. && \
+#		cd ..

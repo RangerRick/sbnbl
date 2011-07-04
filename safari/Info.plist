@@ -31,6 +31,7 @@
 			</array>
 			<key>Start</key>
 			<array>
+				<string>common.js</string>
 				<string>dao.js</string>
 			</array>
 		</dict>

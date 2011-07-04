@@ -1,34 +1,29 @@
+<script src="common.js"></script>
 <script src="dao.js"></script>
 <script>
-chrome.extension.onRequest.addListener(
-  function(request, sender, sendResponse) {
-    console.log("received request: " + request.action);
+var send_update = function(users) {
+	console.debug("sending update: users = " + JSON.stringify(users));
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {"user_update": users}, function(response) {
+		});
+	});
+}
 
-    if (request.action == "getConfig") {
-      var users = get_users();
-      var interval = get_interval();
-      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
-      sendResponse({
-        "users": users,
-        "interval": interval
-      });
-    } else if (request.action == "blockUser") {
-      var users = block_user(request.user);
-      var interval = get_interval();
-      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
-      sendResponse({
-        "users": users,
-        "interval": interval
-      });
-    } else if (request.action == "unblockUser") {
-      var users = unblock_user(request.user);
-      var interval = get_interval();
-      console.log("returning users = " + JSON.stringify(users) + ", interval = " + interval);
-      sendResponse({
-        "users": users,
-        "interval": interval
-      });
-    }
-  }
-);
+var do_refresh = function(messageEvent) {
+	if (messageEvent.name == "force_refresh") {
+		console.debug("forcing a refresh");
+		do_update();
+	}
+}
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+	console.log("received request: " + request.action);
+
+	if (request.action == "force_refresh") {
+		console.debug("forcing a refresh");
+		do_update();
+	}
+});
+
+do_update();
 </script>

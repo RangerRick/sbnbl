@@ -11,7 +11,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["content.css"],
-      "js": ["dao.js", "contentscript.js"],
+      "js": ["common.js", "dao.js", "contentscript.js"],
       "run_at": "document_idle"
     }
   ],

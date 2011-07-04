@@ -1,4 +1,4 @@
-function get_author_paragraph_for_comment(comment) {
+var get_author_paragraph_for_comment = function(comment) {
 	var paragraphs=comment.getElementsByTagName("p");
 	var paragraph;
 	if (paragraphs) {
@@ -13,18 +13,21 @@ function get_author_paragraph_for_comment(comment) {
 	return null;
 }
 
-function get_author_for_comment(comment) {
+var get_author_for_comment = function(comment) {
 	var paragraph = get_author_paragraph_for_comment(comment);
 	if (paragraph != null) {
-		var aTags = paragraph.getElementsByTagName("a");
-		if (aTags.length > 0) {
-			return aTags[0].innerText.toLowerCase();
+		var children = paragraph.childNodes;
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+			if (child.nodeName.toLowerCase() == "a") {
+				return child.textContent.toLowerCase();
+			}
 		}
 	}
 	return null;
 }
 
-function cleanText(users) {
+var cleanText = function(users) {
 	var comments = document.getElementsByClassName("comment_master_list")[0].childNodes;
 	//var comments = document.getElementsByClassName("citem");
 	for (i = 0; i < comments.length; i++) {
@@ -41,8 +44,8 @@ function cleanText(users) {
 	}
 }
 
-function hide_comment(author, users, comment) {
-	if (debug) console.debug("hide_comment(" + author + ", " + comment.id + ")");
+var hide_comment = function(author, users, comment) {
+	if (debug) console.log("hide_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
 	var comment_container  = comment.getElementsByTagName("div")[0];
@@ -93,8 +96,8 @@ function hide_comment(author, users, comment) {
 	}
 }
 
-function show_comment(author, users, comment) {
-	if (debug) console.debug("show_comment(" + author + ", " + comment.id + ")");
+var show_comment = function(author, users, comment) {
+	if (debug) console.log("show_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
 	var comment_container  = comment.getElementsByTagName("div")[0];
@@ -153,7 +156,7 @@ if (window.top == window) {
 			}
 		}
 	}
-	if (debug && foundSbNation) console.debug("found an SBNation web site");
+	if (debug && foundSbNation) console.log("found an SBNation web site");
 
 	if (foundSbNation) {
 		register_listener(function(users) {

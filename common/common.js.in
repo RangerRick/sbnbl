@@ -10,7 +10,7 @@ Array.prototype.remove = function(from, to) {
 	return this.push.apply(this, rest);
 };
 
-function array_to_lowercase(obj) {
+var array_to_lowercase = function(obj) {
 	var response = [];
 	for (var i = 0; i < obj.length; i++) {
 		// lower-case, and remove leading and ending strings
@@ -19,11 +19,11 @@ function array_to_lowercase(obj) {
 	return response;
 }
 
-function do_update() {
-	if (debug) console.debug("do_update called");
+var do_update = function() {
+	if (debug) console.log("do_update called");
 	var newInterval = get_interval();
 	if (newInterval != interval) {
-		console.debug("do_update: interval has changed, re-creating interval (" + interval + " -> " + newInterval + ")")
+		console.log("do_update: interval has changed, re-creating interval (" + interval + " -> " + newInterval + ")");
 		if (intervalId != -1) window.clearInterval(intervalId);
 		intervalId = window.setInterval(do_update, newInterval * 1000);
 		interval = newInterval;

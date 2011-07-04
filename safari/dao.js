@@ -1,6 +1,6 @@
 var event_callback = null;
 
-function get_users() {
+var get_users = function() {
 	var users = [];
 	var userSetting = safari.extension.settings.getItem("users");
 	if (userSetting != null) {
@@ -16,7 +16,7 @@ function get_users() {
 	return users;
 }
 
-function get_interval() {
+var get_interval = function() {
 	var intervalSetting = safari.extension.settings.getItem("interval");
 	if (intervalSetting == null) {
 		return default_interval;
@@ -28,19 +28,19 @@ function get_interval() {
 	return interval;
 }
 
-function get_url(fragment) {
+var get_url = function(fragment) {
 	return safari.extension.baseURI + fragment;
 }
 
 var handle_config_event = function(messageEvent) {
-	if (debug) console.debug("handle_config_event: " + JSON.stringify(messageEvent));
+	if (debug) console.log("handle_config_event: " + JSON.stringify(messageEvent));
 	if (event_callback != null && messageEvent.name === "user_update") {
 		event_callback(messageEvent.message);
 	}
 }
 
-function register_listener(callback) {
-	console.debug(pluginName + " registering configuration listener");
+var register_listener = function(callback) {
+	console.log(pluginName + " registering configuration listener");
 	event_callback = callback;
 	safari.self.addEventListener("message", handle_config_event, false);
 	safari.self.tab.dispatchMessage("force_refresh", null);

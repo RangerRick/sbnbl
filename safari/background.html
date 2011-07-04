@@ -3,13 +3,13 @@
 <script>
 // called by do_update to actually send the update
 var send_update = function(users) {
-	if (debug) console.debug("sending update: users = " + JSON.stringify(users));
+	if (debug) console.log("sending update: users = " + JSON.stringify(users));
 	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("user_update", users);
 }
 
 safari.application.addEventListener("message", function(messageEvent) {
 	if (messageEvent.name == "force_refresh") {
-		if (debug) console.debug("forcing a refresh");
+		if (debug) console.log("forcing a refresh");
 		do_update();
 	}
 }, false);

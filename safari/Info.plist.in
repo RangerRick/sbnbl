@@ -48,5 +48,9 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://ranger.befunk.com/sbnbl/safari-update.plist</string>
+	<key>Website</key>
+	<string>http://me.raccoonfink.com/sbnation-black-list-browser-extension/</string>
 </dict>
 </plist>

@@ -2,7 +2,7 @@
 
 SBNation is a consortium of blogs covering a wide variety of sports subjects.
 
-While the majority of SBNation users are great, sometimes, you wish you could
+While the majority of SBNation users are great, sometimes you wish you could
 ignore a few of them.  This extension does just that -- it automatically
 parses the content of any SBNation site and hides the comments of anyone you
 have added to the blacklist.

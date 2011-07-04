@@ -42,7 +42,7 @@ function cleanText(users) {
 }
 
 function hide_comment(author, users, comment) {
-	// console.debug("hide_comment(" + author + ", " + comment.id + ")");
+	if (debug) console.debug("hide_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
 	var comment_container  = comment.getElementsByTagName("div")[0];
@@ -94,7 +94,7 @@ function hide_comment(author, users, comment) {
 }
 
 function show_comment(author, users, comment) {
-	// console.debug("show_comment(" + author + ", " + comment.id + ")");
+	if (debug) console.debug("show_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
 	var comment_container  = comment.getElementsByTagName("div")[0];
@@ -153,11 +153,11 @@ if (window.top == window) {
 			}
 		}
 	}
-	console.debug("foundSbNation = " + foundSbNation);
+	if (debug && foundSbNation) console.debug("found an SBNation web site");
 
 	if (foundSbNation) {
 		register_listener(function(users) {
-			console.log("event listener: received update: users = " + JSON.stringify(users));
+			if (debug) console.log("event listener: received update: users = " + JSON.stringify(users));
 			cleanText(users);
 		});
 	}

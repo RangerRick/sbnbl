@@ -1,6 +1,8 @@
 var default_interval = 60;
 var intervalId = -1;
 var interval = -1;
+var pluginName = "SBNation Black List @VERSION@";
+var debug = false;
 
 Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
@@ -18,10 +20,10 @@ function array_to_lowercase(obj) {
 }
 
 function do_update() {
-	console.debug("do_update");
+	if (debug) console.debug("do_update called");
 	var newInterval = get_interval();
 	if (newInterval != interval) {
-		console.debug("do_update: interval has changed, re-adding interval (" + interval + " -> " + newInterval + ")")
+		console.debug("do_update: interval has changed, re-creating interval (" + interval + " -> " + newInterval + ")")
 		if (intervalId != -1) window.clearInterval(intervalId);
 		intervalId = window.setInterval(do_update, newInterval * 1000);
 		interval = newInterval;

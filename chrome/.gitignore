@@ -5,6 +5,8 @@ block.png
 disabled-background.png
 unblock.png
 
+manifest.json
+
 content.css
 
 contentscript.js

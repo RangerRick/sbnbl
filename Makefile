@@ -1,13 +1,16 @@
-VERSION = 0.70
+VERSION = 0.72
 
-COMMON_FILES := common/*.*
-CHROME_FILES = $(COMMON_FILES) chrome/*.*
-SAFARI_FILES = $(COMMON_FILES) safari/*.*
+COMMON_FILES := common/*.* common/common.js
+CHROME_FILES = $(COMMON_FILES) chrome/*.* chrome/manifest.json
+SAFARI_FILES = $(COMMON_FILES) safari/*.* safari/Info.plist
 
 all: build/sbnbl.zip build/sbnbl.safariextension
 
 clean:
 	rm -rf build
+
+%: %.in Makefile
+	sed -e 's,@VERSION@,$(VERSION),g' $< > $@
 
 build/sbnbl.zip: $(CHROME_FILES)
 	install -d -m 755 build/chrome
@@ -15,7 +18,6 @@ build/sbnbl.zip: $(CHROME_FILES)
 		echo $$file; \
 		cp $$file build/chrome/; \
 		done
-	sed -e 's,@VERSION@,$(VERSION),g' chrome/manifest.json > build/chrome/manifest.json
 	zip -9 -j $@ build/chrome/*
 
 build/sbnbl.safariextension: $(SAFARI_FILES)
@@ -27,10 +29,3 @@ build/sbnbl.safariextension: $(SAFARI_FILES)
 		done
 	cp common/128.png $@/Icon.png
 	cp common/48.png $@/Icon-48.png
-	sed -e 's,@VERSION@,$(VERSION),g' safari/Info.plist > $@/Info.plist
-
-safari/%.plist: build/sbnbl.safariextension/%.plist
-	cp $< $@
-
-update: safari/Info.plist safari/Settings.plist
-	$(MAKE) all

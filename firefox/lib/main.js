@@ -5,6 +5,7 @@ if (typeof window == 'undefined') {
 	window = require("timers");
 }
 
+var baseUrl = data.url("common.js").replace(/common.js$/, "");
 eval(data.load("common.js"));
 eval(data.load("dao.js"));
 
@@ -19,7 +20,7 @@ var send_update = function(users) {
 
 var initialize = function(worker) {
 	addon_worker = worker;
-
+	addon_worker.port.emit("base_url", baseUrl);
 	addon_worker.port.on('force_refresh', function() {
 		do_update();
 	});

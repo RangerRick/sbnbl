@@ -1,4 +1,5 @@
 var event_callback = null;
+var baseUrl = null;
 
 // var data = undefined;
 // if (require) {
@@ -36,13 +37,23 @@ var get_interval = function() {
 	return default_interval;
 }
 
+var set_url_base = function(url) {
+	if (debug) console.log("setting URL base to " + url);
+	baseUrl = url;
+}
+
 var get_url = function(fragment) {
-	return "resource://jid1-xdzaawywo6ectw-at-jetpack-sbnbl-lib/" + fragment;
+	if (baseUrl == null) {
+		return fragment;
+	} else {
+		return baseUrl + fragment;
+	}
 }
 
 var register_listener = function(callback) {
 	console.log(pluginName + " registering configuration listener");
 	event_callback = callback;
 	self.port.on("user_update", event_callback);
+	self.port.on("base_url", set_url_base);
 	self.port.emit("force_refresh", null);
 }

@@ -1,9 +1,0 @@
-{
-    "name": "sbnbl", 
-    "license": "MPL 1.1/GPL 2.0/LGPL 2.1", 
-    "author": "Benjamin Reed", 
-    "version": "0.73", 
-    "fullName": "SBNation Black List", 
-    "id": "jid1-XDzaaWyWo6EcTw", 
-    "description": "Hide SBNation comments (and responses made to them) by certain users. Not in any way affiliated with, nor endorsed by, SBNation."
-}

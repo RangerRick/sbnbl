@@ -11,3 +11,7 @@ have added to the blacklist.
 
 First, you must be using either Google Chrome, or Safari.  Other browser
 support may be added eventually, but this is the initial implementation. =)
+
+# TODO
+
+* implement preferences as an injected HTML page (using local storage)

@@ -9,7 +9,7 @@ var baseUrl = null;
 //}
 
 var get_users = function() {
-	var users = ["norwegiancaniac"];
+	var users = [];
 //	var userSetting = safari.extension.settings.getItem("users");
 //	if (userSetting != null) {
 //		if (userSetting.indexOf(",") != -1) {

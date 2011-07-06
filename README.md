@@ -15,3 +15,11 @@ support may be added eventually, but this is the initial implementation. =)
 # TODO
 
 * implement preferences as an injected HTML page (using local storage)
+
+# Version History
+
+* 1.1.1
+  - Set debug logging to false. Accidentally left it on in 1.1.0.
+* 1.1.0
+  - Add support for choosing whether to block replies to blocked comments
+* 1.0.x Initial Public Release

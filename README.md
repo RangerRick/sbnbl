@@ -16,7 +16,7 @@ support may be added eventually, but this is the initial implementation. =)
 
 * implement preferences as an injected HTML page (using local storage)
 
-# Version History
+# <a name="Version_History" />Version History
 
 * 1.1.1
   - Set debug logging to false. Accidentally left it on in 1.1.0.

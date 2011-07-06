@@ -1,8 +1,9 @@
 var default_interval = 60;
+var default_block_replies = true;
 var intervalId = -1;
 var interval = -1;
 var pluginName = "SBNation Black List @VERSION@";
-var debug = false;
+var debug = true;
 
 Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
@@ -30,5 +31,5 @@ var do_update = function() {
 	}
 
 	var users = get_users();
-	send_update(array_to_lowercase(users));
+	send_update({ "users": array_to_lowercase(users), "blockReplies": get_block_replies() });
 }

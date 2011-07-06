@@ -37,6 +37,10 @@ var get_interval = function() {
 	return default_interval;
 }
 
+var get_block_replies = function() {
+	return default_block_replies;
+}
+
 var set_url_base = function(url) {
 	if (debug) console.log("setting URL base to " + url);
 	baseUrl = url;
@@ -53,7 +57,7 @@ var get_url = function(fragment) {
 var register_listener = function(callback) {
 	console.log(pluginName + " registering configuration listener");
 	event_callback = callback;
-	self.port.on("user_update", event_callback);
+	self.port.on("config_update", event_callback);
 	self.port.on("base_url", set_url_base);
 	self.port.emit("force_refresh", null);
 }

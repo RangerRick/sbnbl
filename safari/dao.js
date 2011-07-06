@@ -28,13 +28,21 @@ var get_interval = function() {
 	return interval;
 }
 
+var get_block_replies = function() {
+	var blockedSetting = safari.extension.settings.getItem("blockReplies");
+	if (blockedSetting == null) {
+		return default_block_replies;
+	}
+	return blockedSetting;
+}
+
 var get_url = function(fragment) {
 	return safari.extension.baseURI + fragment;
 }
 
 var handle_config_event = function(messageEvent) {
 	if (debug) console.log("handle_config_event: " + JSON.stringify(messageEvent));
-	if (event_callback != null && messageEvent.name === "user_update") {
+	if (event_callback != null && messageEvent.name === "config_update") {
 		event_callback(messageEvent.message);
 	}
 }

@@ -27,7 +27,8 @@ var get_author_for_comment = function(comment) {
 	return null;
 }
 
-var cleanText = function(users) {
+var cleanText = function(data) {
+	var users = data.users;
 	var comments = document.getElementsByClassName("comment_master_list")[0].childNodes;
 	//var comments = document.getElementsByClassName("citem");
 	for (i = 0; i < comments.length; i++) {
@@ -36,15 +37,17 @@ var cleanText = function(users) {
 		var author = get_author_for_comment(comment);
 		if (author != null) {
 			if (users.indexOf(author) != -1) {
-				hide_comment(author, users, comment);
+				hide_comment(author, data, comment);
 			} else {
-				show_comment(author, users, comment);
+				show_comment(author, data, comment);
 			}
 		}
 	}
 }
 
-var hide_comment = function(author, users, comment) {
+var hide_comment = function(author, data, comment) {
+	var users = data.users;
+	var blockReplies = data.blockReplies;
 	if (debug) console.log("hide_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
@@ -92,11 +95,20 @@ var hide_comment = function(author, users, comment) {
 		var subElement = comment.childNodes[s];
 		if (subElement.className != "citem") continue;
 		var newAuthor = get_author_for_comment(subElement);
-		hide_comment(newAuthor, users, subElement);
+		if (blockReplies) {
+			hide_comment(newAuthor, data, subElement);
+		} else {
+			if (users.indexOf(newAuthor) != -1) {
+				hide_comment(newAuthor, data, subElement);
+			} else {
+				show_comment(newAuthor, data, subElement);
+			}
+		}
 	}
 }
 
-var show_comment = function(author, users, comment) {
+var show_comment = function(author, data, comment) {
+	var users = data.users;
 	if (debug) console.log("show_comment(" + author + ", " + comment.id + ")");
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
@@ -133,9 +145,9 @@ var show_comment = function(author, users, comment) {
 		if (subElement.className != "citem") continue;
 		var newAuthor = get_author_for_comment(subElement);
 		if (users.indexOf(newAuthor) != -1) {
-			hide_comment(newAuthor, users, subElement);
+			hide_comment(newAuthor, data, subElement);
 		} else {
-			show_comment(newAuthor, users, subElement);
+			show_comment(newAuthor, data, subElement);
 		}
 	}
 }
@@ -159,9 +171,9 @@ if (window.top == window) {
 	if (debug && foundSbNation) console.log("found an SBNation web site");
 
 	if (foundSbNation) {
-		register_listener(function(users) {
-			if (debug) console.log("event listener: received update: users = " + JSON.stringify(users));
-			cleanText(users);
+		register_listener(function(data) {
+			if (debug) console.log("event listener: received update: data = " + JSON.stringify(data));
+			cleanText(data);
 		});
 	}
 }

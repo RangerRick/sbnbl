@@ -3,28 +3,38 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>DefaultValue</key>
-		<real>60</real>
 		<key>Key</key>
 		<string>interval</string>
-		<key>MaximumValue</key>
-		<real>300</real>
-		<key>MinimumValue</key>
-		<real>10</real>
-		<key>Title</key>
-		<string>Re-Scan Interval (Seconds)</string>
 		<key>Type</key>
 		<string>TextField</string>
+		<key>Title</key>
+		<string>Re-Scan Interval (Seconds)</string>
+		<key>MinimumValue</key>
+		<real>10</real>
+		<key>MaximumValue</key>
+		<real>300</real>
+		<key>DefaultValue</key>
+		<real>60</real>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>blockReplies</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+		<key>Title</key>
+		<string>Block Responses To Blocked Users?</string>
+		<key>DefaultValue</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>Key</key>
 		<string>users</string>
+		<key>Type</key>
+		<string>TextField</string>
 		<key>Title</key>
 		<string>Users (Comma-Separated)</string>
 		<key>Titles</key>
 		<array/>
-		<key>Type</key>
-		<string>TextField</string>
 	</dict>
 </array>
 </plist>

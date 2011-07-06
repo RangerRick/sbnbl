@@ -55,6 +55,14 @@ function update_ui() {
     interval = default_interval;
   }
   update_interval(interval);
+
+	var blockRepliesTag = document.getElementById("blockReplies");
+	blockRepliesTag.checked = get_block_replies();
+}
+
+function update_block_replies() {
+	var blockRepliesTag = document.getElementById("blockReplies");
+	set_block_replies(blockRepliesTag.checked);
 }
 
 function update_interval_ui() {
@@ -85,6 +93,10 @@ the way that SBNation comments are displayed in your browser session.</p>
 <table id="users">
 </table>
 </form>
+
+<h1>Block Replies</h1>
+<p>To block replies to blacklisted comments, check this box.  Otherwise, only comments from users on the blacklist will be blocked.</p>
+<input id="blockReplies" type="checkbox" checked="" onchange="update_block_replies()" /> <label for="blockReplies">Block Replies</label>
 
 <h1>Re-Scan Interval</h1>
 <p>To set how often this extension will re-scan an SBNation site for users that have been blocked, move the slider to the desired interval.</p>

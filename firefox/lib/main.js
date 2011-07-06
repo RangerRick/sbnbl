@@ -9,13 +9,13 @@ var baseUrl = data.url("common.js").replace(/common.js$/, "");
 eval(data.load("common.js"));
 eval(data.load("dao.js"));
 
-var send_update = function(users) {
+var send_update = function(data) {
 	if (addon_worker == null) {
 		console.log("Worker is null, can't do anything yet.");
 		return;
 	}
 
-	addon_worker.port.emit("user_update", users);
+	addon_worker.port.emit("config_update", data);
 }
 
 var initialize = function(worker) {

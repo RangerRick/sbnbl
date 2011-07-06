@@ -56,6 +56,30 @@ var set_interval = function(interval) {
 	return interval;
 }
 
+var get_block_replies = function() {
+	var blocked = default_block_replies;
+
+	var blockedString = localStorage["blockReplies"];
+	if (blockedString != undefined) {
+		blockedString = blockedString.toLowerCase();
+		if (blockedString == "true") {
+			blocked = true;
+		} else if (blockedString == "false") {
+			blocked = false;
+		} else {
+			console.log("unsure how to parse blockReplies = " + blockedString);
+		}
+	}
+
+	if (debug) console.log("get_block_replies() returning " + blocked);
+	return blocked;
+}
+
+var set_block_replies = function(block) {
+	if (debug) console.log("set_block_replies(" + block + ")");
+	localStorage["blockReplies"] = block;
+}
+
 var get_url = function(fragment) {
 	return chrome.extension.getURL(fragment);
 }
@@ -64,7 +88,7 @@ var event_callback = null;
 
 var handle_config_event = function(messageEvent) {
 	if (debug) console.log("handle_config_event: " + JSON.stringify(messageEvent));
-	if (event_callback != null && messageEvent.name === "user_update") {
+	if (event_callback != null && messageEvent.name === "config_update") {
 		event_callback(messageEvent.message);
 	} 
 }     
@@ -74,8 +98,8 @@ var register_listener = function(callback) {
 	event_callback = callback;
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		if (debug) console.log("register_listener: request = " + JSON.stringify(request));
-		if (event_callback != null && request.user_update) {
-			event_callback(request.user_update);
+		if (event_callback != null && request.config_update) {
+			event_callback(request.config_update);
 			sendResponse({});
 		}
 	});

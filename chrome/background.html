@@ -1,10 +1,10 @@
 <script src="common.js"></script>
 <script src="dao.js"></script>
 <script>
-var send_update = function(users) {
-	if (debug) console.log("sending update: users = " + JSON.stringify(users));
+var send_update = function(data) {
+	if (debug) console.log("sending update: data = " + JSON.stringify(data));
 	chrome.tabs.getSelected(null, function(tab) {
-		chrome.tabs.sendRequest(tab.id, {"user_update": users}, function(response) {
+		chrome.tabs.sendRequest(tab.id, {"config_update": data}, function(response) {
 		});
 	});
 }

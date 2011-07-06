@@ -4,12 +4,19 @@
 // called by do_update to actually send the update
 var send_update = function(data) {
 	if (debug) console.log("sending update: data = " + JSON.stringify(data));
-	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("config_update", data);
+	for (var w=0; w < safari.application.browserWindows.length; w++) {
+		var window = safari.application.browserWindows[w];
+		for (var t=0; t < window.tabs.length; t++) {
+			var tab = window.tabs[t];
+			tab.page.dispatchMessage("config_update", data);
+		}
+	}
+	// safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("config_update", data);
 }
 
 safari.application.addEventListener("message", function(messageEvent) {
-	if (messageEvent.name == "force_refresh") {
-		if (debug) console.log("forcing a refresh");
+	if (messageEvent.name == "register") {
+		if (debug) console.log("register called: forcing a refresh");
 		do_update();
 	}
 }, false);

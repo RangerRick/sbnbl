@@ -21,7 +21,7 @@ var send_update = function(data) {
 var initialize = function(worker) {
 	addon_worker = worker;
 	addon_worker.port.emit("base_url", baseUrl);
-	addon_worker.port.on('force_refresh', function() {
+	addon_worker.port.on('register', function() {
 		do_update();
 	});
 

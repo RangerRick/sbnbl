@@ -1,4 +1,5 @@
 var event_callback = null;
+var tabs = [];
 
 var get_users = function() {
 	var users = [];
@@ -51,5 +52,5 @@ var register_listener = function(callback) {
 	console.log(pluginName + " registering configuration listener");
 	event_callback = callback;
 	safari.self.addEventListener("message", handle_config_event, false);
-	safari.self.tab.dispatchMessage("force_refresh", null);
+	safari.self.tab.dispatchMessage("register", null);
 }

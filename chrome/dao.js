@@ -103,6 +103,6 @@ var register_listener = function(callback) {
 			sendResponse({});
 		}
 	});
-	chrome.extension.sendRequest({"action": "force_refresh"}, function(response) {
+	chrome.extension.sendRequest({"action": "register"}, function(response) {
 	});
 } 

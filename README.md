@@ -18,6 +18,9 @@ support may be added eventually, but this is the initial implementation. =)
 
 # <a name="Version_History" />Version History
 
+* 1.1.2
+  - Scans and updates blacklisted comments for all tabs with SBNation pages
+    loaded, rather than just the currently selected tab.
 * 1.1.1
   - Set debug logging to false. Accidentally left it on in 1.1.0.
 * 1.1.0

@@ -1,4 +1,4 @@
-VERSION = 1.1.1
+VERSION = 1.1.2
 
 COMMON_FILES := common/*.* common/common.js
 CHROME_FILES = $(COMMON_FILES) chrome/*.* chrome/manifest.json

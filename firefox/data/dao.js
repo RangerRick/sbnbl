@@ -59,5 +59,5 @@ var register_listener = function(callback) {
 	event_callback = callback;
 	self.port.on("config_update", event_callback);
 	self.port.on("base_url", set_url_base);
-	self.port.emit("force_refresh", null);
+	self.port.emit("register", null);
 }

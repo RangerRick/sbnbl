@@ -1,5 +1,4 @@
 var get_users = function() {
-	var users;
 	var storageString = localStorage["users"];
 	if (storageString && storageString != null) {
 		users = JSON.parse(storageString);
@@ -32,7 +31,7 @@ var unblock_user = function(user) {
 	var users = get_users();
 	for (var i = 0; i < users.length; i++) {
 		if (users[i] == user) {
-			users.remove(i);
+			users.splice(i, 1);
 			break;
 		}
 	}
@@ -96,13 +95,13 @@ var handle_config_event = function(messageEvent) {
 var register_listener = function(callback) {
 	console.log(pluginName + " registering configuration listener");
 	event_callback = callback;
-	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		if (debug) console.log("register_listener: request = " + JSON.stringify(request));
 		if (event_callback != null && request.config_update) {
 			event_callback(request.config_update);
 			sendResponse({});
 		}
 	});
-	chrome.extension.sendRequest({"action": "register"}, function(response) {
+	chrome.runtime.sendMessage({"action": "register"}, function(response) {
 	});
 } 

@@ -3,13 +3,15 @@ var default_block_replies = true;
 var intervalId = -1;
 var interval = -1;
 var pluginName = "SBNation Black List @VERSION@";
-var debug = false;
+var debug = true;
 
+/*
 Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
 };
+*/
 
 var array_to_lowercase = function(obj) {
 	var response = [];

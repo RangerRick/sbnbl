@@ -1,86 +1,14 @@
-<html>
-<head><title>SBNation Black List Options</title></head>
-<script src="common.js"></script>
-<script src="dao.js"></script>
-<script>
-
-function add_user() {
-  var input = document.getElementById("userinput");
-  var user = input.value;
-
-  block_user(user);
-  update_ui();
-  return false;
-}
-
-function delete_user(user) {
-  unblock_user(user);
-  update_ui();
-  return false;
-}
-
-function reset_config() {
-  set_users([]);
-  set_interval(default_interval);
-  update_interval_ui();
-  update_ui();
-}
-
-function update_ui() {
-  var users = get_users();
-
-  var table = document.getElementById("users");
-  if(!table) {
-    return;
-  }
-  table.innerHTML = "";
-
-  var tr = document.createElement("tr");
-  tr.innerHTML = "<td><input id=\"userinput\" type=\"text\" name=\"name\" placeholder=\"Add User\" /></td><td><button id=\"addUserButton\" onclick=\"add_user()\">Block</button></td>";
-  table.appendChild(tr);
-
-  if (users && users.length > 0) {
-    for (var i = 0; i < users.length; i++) {
-      var user = users[i];
-      var tr = document.createElement("tr");
-      tr.innerHTML = "<td>" + user + "</td><td><button id=\"deleteUserButton\" onclick=\"delete_user('" + user + "')\">Un-Block</button></td>";
-      table.appendChild(tr);
-    }
-  }
-
-  document.getElementById("userinput").focus();
-
-  var interval = parseInt(localStorage["interval"]);
-  if (!interval || interval == NaN) {
-    interval = default_interval;
-  }
-  update_interval(interval);
-
-	var blockRepliesTag = document.getElementById("blockReplies");
-	blockRepliesTag.checked = get_block_replies();
-}
-
-function update_block_replies() {
-	var blockRepliesTag = document.getElementById("blockReplies");
-	set_block_replies(blockRepliesTag.checked);
-}
-
-function update_interval_ui() {
-	document.getElementById("interval").value = get_interval();
-}
-
-function update_interval(newValue) {
-  set_interval(newValue);
-  document.getElementById("range").innerHTML=newValue;
-}
-
-function do_onload() {
-	update_ui();
-	update_interval_ui();
-}
-</script>
-
-<body onload="do_onload()">
+<!doctype html>
+<html lang="en" ng-csp ng-app>
+<head>
+	<title>SBNation Black List Options</title>
+	<meta charset="utf-8">
+	<script src="angular.min.js"></script>
+	<script src="common.js"></script>
+	<script src="dao.js"></script>
+	<script src="options.js"></script>
+</head>
+<body ng-controller="UserListCtrl">
 <h1>About The SBNation Black List Extension</h1>
 <p>This extension allows you to create a list of usernames whose comments (and replies to those comments) will be hidden on any SBNation site.</p>
 <p>It runs entirely in your browser session, and will not affect the SBNation servers, nor post any data to those servers. It only affects
@@ -89,26 +17,32 @@ the way that SBNation comments are displayed in your browser session.</p>
 <h1>Block Users</h1>
 <p>To block a user, type their username in the box below and click the "Block" button.</p>
 <p>To remove a user from the black list, click the "Un-Block" button next to their username.</p>
-<form id="usersForm" action="javascript:add_user()">
-<table id="users">
+<table class="users">
+	<tr ng-repeat="user in users">
+		<td>{{user.username}}</td>
+		<td><button ng-src="{{user}}" ng-click="delete_user(user)">Un-Block</button></td>
+	</tr>
+	<tr>
+		<td><input id="userinput" type="text" name="username" placeholder="Add User" ng-model="addUser" /></td>
+		<td><button id="addUserButton" ng-click="add_user()">Block</button></td>
+	</tr>
 </table>
-</form>
 
 <h1>Block Replies</h1>
 <p>To block replies to blacklisted comments, check this box.  Otherwise, only comments from users on the blacklist will be blocked.</p>
-<input id="blockReplies" type="checkbox" checked="" onchange="update_block_replies()" /> <label for="blockReplies">Block Replies</label>
+<input id="blockReplies" type="checkbox" ng-checked="blockReplies" ng-model="blockReplies" ng-click="update_block_replies()" /> <label for="blockReplies">Block Replies</label>
 
 <h1>Re-Scan Interval</h1>
 <p>To set how often this extension will re-scan an SBNation site for users that have been blocked, move the slider to the desired interval.</p>
 <p>During the next scan, if a user has been blocked, their posts will not display.  If a user has been un-blocked, their posts will re-appear.</p>
-<input id="interval" type="range" min="10" max="300" value="60" onchange="update_interval(this.value)" />
-<span id="range">60</span> seconds
+<input id="interval" type="range" min="10" max="300" ng-model="interval" ng-change="update_interval()" />
+<span id="range">{{interval}}</span> seconds
 
 <h1>Reset To Defaults</h1>
 <p>To un-block all users, and set the re-scan interval back to the default of 60 seconds, click the "Reset" button.</p>
-<button id="resetConfigButton" onclick="reset_config()">Reset</button>
+<button id="resetConfigButton" ng-click="reset_config()">Reset</button>
 
-<p>Copyright &copy; Benjamin Reed, 2011.</p>
+<p>Copyright &copy; Benjamin Reed, 2011-2013.</p>
 <p>Troll image from <a href="http://www.flickr.com/photos/flisspix/360976910/">flickr.com/flisspix</a>, under a
 <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en">Creative Commons Non-Commercial, Share-Alike</a> license.</p>
 </body>

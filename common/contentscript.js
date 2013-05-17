@@ -1,3 +1,5 @@
+var blocked_comments = {};
+
 var get_author_paragraph_for_comment = function(comment) {
 	var paragraphs=comment.getElementsByTagName("p");
 	var paragraph;
@@ -14,45 +16,72 @@ var get_author_paragraph_for_comment = function(comment) {
 }
 
 var get_author_for_comment = function(comment) {
-	var paragraph = get_author_paragraph_for_comment(comment);
-	if (paragraph != null) {
-		var children = paragraph.childNodes;
-		for (var i = 0; i < children.length; i++) {
-			var child = children[i];
-			if (child.nodeName.toLowerCase() == "a") {
-				return child.textContent.toLowerCase();
-			}
-		}
+	var anode = comment.getElementsByClassName("poster");
+	if (anode != null && anode.length > 0) {
+		return anode[0].textContent.toLowerCase();
 	}
 	return null;
 }
 
-var cleanText = function(data) {
-	var users = data.users;
-	var comments = document.getElementsByClassName("comment_master_list")[0].childNodes;
-	//var comments = document.getElementsByClassName("citem");
-	for (i = 0; i < comments.length; i++) {
-		var comment = comments[i];
-		if (comment.className != "citem") continue;
-		var author = get_author_for_comment(comment);
-		if (author != null) {
-			if (users.indexOf(author) != -1) {
-				hide_comment(author, data, comment);
-			} else {
-				show_comment(author, data, comment);
-			}
+var check_comment = function(data, comment) {
+	var author = get_author_for_comment(comment);
+	var hide = false;
+	if (author != null) {
+		if (data.users.indexOf(author) != -1) {
+			hide = true;
 		}
 	}
+
+	if (data.blockReplies) {
+		var parent = comment.getAttribute("data-parent-comment-id");
+		if (parent && blocked_comments[parent]) {
+			hide = true;
+		}
+	}
+	
+	if (hide) {
+		hide_comment(author, data, comment);
+	} else {
+		show_comment(author, data, comment);
+	}
+}
+
+var cleanText = function(data) {
+	var comments = document.getElementsByClassName("sbn-comment");
+	for (i = 0; i < comments.length; i++) {
+		var comment = comments[i];
+		check_comment(data, comment);
+	}
+}
+
+var next_element = function(elem) {
+	do {
+		elem = elem.nextSibling;
+	} while (elem && elem.nodeType != 1);
+	return elem;		
 }
 
 var hide_comment = function(author, data, comment) {
 	var users = data.users;
 	var blockReplies = data.blockReplies;
-	if (debug) console.log("hide_comment(" + author + ", " + comment.id + ")");
-	var comment_title      = comment.getElementsByClassName("comment_title")[0];
-	var comment_body       = comment.getElementsByClassName("cbody")[0];
-	var comment_container  = comment.getElementsByTagName("div")[0];
-	var comment_image_link = comment.getElementsByTagName("a")[0];
+	if (debug) {
+		console.log("hide_comment(" + author + "):");
+		console.log(comment);
+	}
+
+	var id = comment.getAttribute("data-comment-id");
+	blocked_comments[id] = true;
+
+	if (!comment.classList.contains("collapsed")) {
+		comment.classList.add("collapsed");
+	}
+
+	/*
+
+	var comment_title      = comment.getElementsByClassName("title")[0];
+	var comment_body       = comment.getElementsByClassName("body")[0];
+	var comment_container  = comment.getElementsByClassName("comment-entry")[0];
+	var comment_image_link = comment.getElementsByClassName("avatar")[0];
 	var reply_link         = comment.getElementsByClassName("reply_link")[0];
 	var up_link            = comment.getElementsByClassName("up_link")[0];
 	var comment_actions    = comment.getElementsByClassName("cactions")[0];
@@ -105,11 +134,21 @@ var hide_comment = function(author, data, comment) {
 			}
 		}
 	}
+	*/
 }
 
 var show_comment = function(author, data, comment) {
 	var users = data.users;
-	if (debug) console.log("show_comment(" + author + ", " + comment.id + ")");
+	if (debug) console.log("show_comment(" + author + ", " + comment["data-comment-id"] + ")");
+
+	if (comment.classList.contains("collapsed")) {
+		comment.classList.remove("collapsed");
+	}
+
+	var id = comment.getAttribute("data-comment-id");
+	delete blocked_comments[id];
+
+	/*
 	var comment_title      = comment.getElementsByClassName("comment_title")[0];
 	var comment_body       = comment.getElementsByClassName("cbody")[0];
 	var comment_container  = comment.getElementsByTagName("div")[0];
@@ -150,6 +189,7 @@ var show_comment = function(author, data, comment) {
 			show_comment(newAuthor, data, subElement);
 		}
 	}
+	*/
 }
 
 if (window.top == window) {

@@ -18,6 +18,10 @@ support may be added eventually, but this is the initial implementation. =)
 
 # <a name="Version_History" />Version History
 
+* 1.2.0
+  - Completely rewrite the Chrome settings page in AngularJS to work with
+    stricter Chrome extension APIs.
+  - Fix comment-rewriting to work with the latest SBN layout.
 * 1.1.2
   - Scans and updates blacklisted comments for all tabs with SBNation pages
     loaded, rather than just the currently selected tab.

@@ -3,7 +3,7 @@ var default_block_replies = true;
 var intervalId = -1;
 var interval = -1;
 var pluginName = "SBNation Black List @VERSION@";
-var debug = true;
+var debug = false;
 
 /*
 Array.prototype.remove = function(from, to) {
